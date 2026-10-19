@@ -35,7 +35,22 @@ Création des 8 entités JPA restantes du modèle AutoLoc (sans associations) et
 
 Deuxième commit : `Prépa Atelier 2 : entités restantes sans associations`.
 
-###  Fonctionnalités "Pour aller plus loin" (Facultatif)
+### 🚀 Atelier 2 (Séance 3) — Associations JPA : Cascade et Fetch
+- **Implémentation pas à pas de l'association guidée `Contrat ↔ Paiement` :**
+  - Côté propriétaire : `Paiement` (`@ManyToOne`, clé étrangère `id_contrat`, `FetchType.LAZY`).
+  - Côté inverse : `Contrat` (`@OneToMany`, `mappedBy = "contrat"`, `CascadeType.ALL`, `orphanRemoval = true`, `FetchType.LAZY`).
+- **Implémentation de l'ensemble des associations du modèle :**
+  - `Agence ↔ Vehicule` : `@OneToMany` / `@ManyToOne`, `id_agence`, `FetchType.LAZY`, sans cascade.
+  - `Agence ↔ Employe` : `@OneToMany` / `@ManyToOne`, `id_agence`, `FetchType.LAZY`, sans cascade.
+  - `Vehicule ↔ Equipement` : `@ManyToMany`, table de jointure `vehicule_equipement`, utilisation de `Set`, `FetchType.LAZY`, sans cascade.
+  - `Client ↔ Reservation` : `@OneToMany` / `@ManyToOne`, `id_client`, `FetchType.LAZY`, `cascade = PERSIST`.
+  - `Reservation → Vehicule` : `@ManyToOne`, `id_vehicule`, `FetchType.LAZY`, sans cascade.
+  - `Reservation ↔ Contrat` : `@OneToOne`, côté propriétaire `Contrat` (`id_reservation`), cascade `ALL` côté `Reservation`, `FetchType.LAZY`.
+  - `Vehicule ↔ Maintenance` : `@OneToMany` / `@ManyToOne`, `id_vehicule`, `FetchType.LAZY`, `cascade = PERSIST`.
+- **Note technique `docs/fetch-strategy.md` :** Rédaction complète justifiant les choix d'architecture, de performances (`LAZY` généralisé), d'intégrité des données (`CascadeType` ciblé et `orphanRemoval`).
+- Troisième commit : `Atelier 2 : associations, cascade et fetch`.
+
+### 🌟 Fonctionnalités "Pour aller plus loin" (Facultatif)
 - Configuration du profil `dev` (H2 en mémoire) permettant le démarrage immédiat et les tests automatiques même sans serveur MySQL local actif.
 - `DataInitializer` (`CommandLineRunner`) insérant 3 véhicules de démonstration au démarrage.
 - Script wrapper Maven (`mvnw` et `mvnw.cmd`) inclus.
@@ -113,5 +128,6 @@ Idéal pour tester immédiatement le schéma et les entités sans avoir besoin d
 ```bash
 git log --oneline
 ```
-- `f439019` : **Prépa Atelier 2 : entités restantes sans associations** (les 8 entités complémentaires, énumérations, repositories)
+- `<commit-hash>` : **Atelier 2 : associations, cascade et fetch** (associations JPA complètes, CascadeType, orphanRemoval, docs/fetch-strategy.md)
+- `83f3c88` : **Prépa Atelier 2 : entités restantes sans associations** (les 8 entités complémentaires, énumérations, repositories)
 - `96704f0` : **Atelier 1 : init projet Spring Boot + entité Vehicule** (initialisation Maven, configurations, entité Vehicule)
